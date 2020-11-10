@@ -6,6 +6,10 @@ Change Log
 - First Release
 - Completed Character Object
 
-0.0.1 (11/10/2020)
+0.0.2 (11/10/2020
+-----------------
+- Fixed Typos
+
+0.0.3 (11/10/2020)
 ------------------
 - Minor documentation edit
