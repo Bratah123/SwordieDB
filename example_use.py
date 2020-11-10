@@ -13,3 +13,13 @@ else:
     print("Mesos:", char.money)
     print("Fame:", char.fame)
 
+    primary_stats = char.get_primary_stats()
+
+    for stat in primary_stats:
+        print(f"{stat}: {primary_stats[stat]}")
+        # Str
+        # Dex
+        # Int
+        # Luk
+
+

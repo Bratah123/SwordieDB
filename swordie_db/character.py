@@ -161,6 +161,15 @@ class Character:
         self.set_stat_by_column("pop", amount)
         self._pop = amount
 
+    def add_fame(self, amount):
+        """
+        Adds to the current fame amount
+        :param amount: int
+        :return:
+        """
+        new_fame = int(self.fame) + amount
+        self.fame = new_fame
+
     @property
     def map(self):
         return self._position_map
@@ -170,14 +179,115 @@ class Character:
         self.set_stat_by_column("posmap", map_id)
         self._position_map = map_id
 
-    def add_fame(self, amount):
+    @property
+    def face(self):
+        return self._face
+
+    @face.setter
+    def face(self, face_id):
+        self.set_stat_by_column("face", face_id)
+        self._face = face_id
+
+    @property
+    def hair(self):
+        return self._hair
+
+    @hair.setter
+    def hair(self, hair_id):
+        self.set_stat_by_column("hair", hair_id)
+        self._hair = hair_id
+
+    @property
+    def skin(self):
+        return self._skin
+
+    @skin.setter
+    def skin(self, skin_id):
+        self.set_stat_by_column("skin", skin_id)
+        self._skin = skin_id
+
+    @property
+    def exp(self):
+        return self._exp
+
+    @exp.setter
+    def exp(self, exp_amount):
+        self.set_stat_by_column("exp", exp_amount)
+        self._exp = exp_amount
+
+    def add_exp(self, amount):
         """
-        Adds to the current fame amount
+        Add to the current existing exp pool
         :param amount: int
-        :return:
+        :return: void
         """
-        new_fame = int(self.fame) + amount
-        self.fame = new_fame
+        new_exp = int(self.exp) + amount
+        self.exp = new_exp
+
+    @property
+    def strength(self):
+        return self._strength
+
+    @strength.setter
+    def strength(self, amount):
+        self.set_stat_by_column("str", amount)
+        self._strength = amount
+
+    def add_str(self, amount):
+        new_str = int(self.strength) + amount
+        self.strength = new_str
+
+    @property
+    def dex(self):
+        return self._dex
+
+    @dex.setter
+    def dex(self, amount):
+        self.set_stat_by_column("dex", amount)
+        self._dex = amount
+
+    def add_dex(self, amount):
+        new_dex = int(self.dex) + amount
+        self.dex = new_dex
+
+    @property
+    def inte(self):
+        return self._inte
+
+    @inte.setter
+    def inte(self, amount):
+        self.set_stat_by_column("inte", amount)
+        self._inte = amount
+
+    def add_inte(self, amount):
+        new_inte = int(self.inte) + amount
+        self.inte = new_inte
+
+    @property
+    def luk(self):
+        return self._luk
+
+    @luk.setter
+    def luk(self, amount):
+        self.set_stat_by_column("luk", amount)
+        self._luk = amount
+
+    def add_luk(self, amount):
+        new_luk = int(self.luk) + amount
+        self.luk = new_luk
+
+    def get_primary_stats(self):
+        """
+        Returns str, int, dex, luk in a dictionary
+        :return: dict
+        """
+        primary_stats = {
+            "str": self._strength,
+            "dex": self._dex,
+            "int": self._inte,
+            "luk": self._luk
+        }
+        return primary_stats
 
     def set_stat_by_column(self, column, value):
         """
@@ -198,7 +308,7 @@ class Character:
             cursor.execute(f"UPDATE characterstats SET {column} = '{value}' WHERE name = '{self.name}'")
             database.commit()
             print(f"Successfully updated {column} value for character: {self.name}.")
-            self._stats[column] = value
+            self._stats[column] = value  # Update the stats in the dictionary
             database.disconnect()
             return True
         except Exception as e:
