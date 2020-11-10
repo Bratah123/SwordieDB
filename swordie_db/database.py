@@ -78,7 +78,7 @@ class SwordieDB:
         try:
             database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema)
             cursor = database.cursor(dictionary=True)
-            cursor.execute(f"UPDATE characterstats SET {column} = {value} WHERE name = '{name}'")
+            cursor.execute(f"UPDATE characterstats SET {column} = '{value}' WHERE name = '{name}'")
             database.commit()
             database.disconnect()
             print(f"Successfully set {name}'s stats in database.")
@@ -86,3 +86,29 @@ class SwordieDB:
         except Exception as e:
             print("[ERROR] Error trying to update character stats in Database.", e)
             return False
+
+    def get_user_id_by_name(self, char_name):
+        """
+        Given a character name, retrieve it's corresponding user id from database
+        :param char_name: string
+        :return: string / None
+        """
+        try:
+            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema)
+            cursor = database.cursor(dictionary=True)
+
+            cursor.execute(f"SELECT characterid FROM characterstats WHERE name = '{char_name}'")
+            char_id = cursor.fetchall()[0]["characterid"]
+
+            cursor.execute(f"SELECT accid FROM characters WHERE id = '{char_id}'")
+            account_id = cursor.fetchall()[0]["accid"]
+
+            cursor.execute(f"SELECT userid FROM accounts WHERE id = '{account_id}'")
+            user_id = cursor.fetchall()[0]["userid"]
+
+            database.disconnect()
+            return user_id
+
+        except Exception as e:
+            print("[ERROR] Error trying to get user id from database.", e)
+            return None  # Return None if there was an error

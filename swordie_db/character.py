@@ -110,6 +110,16 @@ class Character:
         self.set_stat_by_column("job", job_id)
         self._job = job_id
 
+    def get_job_name(self):
+        """
+        Returns the actual name of the job from job id
+        :return: String
+        """
+        json_path = path.dirname(path.abspath(__file__)) + "/jobs.json"
+        with open(json_path, 'r') as f:
+            json_data = json.load(f)
+            return json_data[str(self.job)]
+
     @property
     def name(self):
         return self._name
@@ -151,6 +161,15 @@ class Character:
         self.set_stat_by_column("pop", amount)
         self._pop = amount
 
+    @property
+    def map(self):
+        return self._position_map
+
+    @map.setter
+    def map(self, map_id):
+        self.set_stat_by_column("posmap", map_id)
+        self._position_map = map_id
+
     def add_fame(self, amount):
         """
         Adds to the current fame amount
@@ -160,19 +179,10 @@ class Character:
         new_fame = int(self.fame) + amount
         self.fame = new_fame
 
-    def get_job_name(self):
-        """
-        Returns the actual name of the job from job id
-        :return: String
-        """
-        json_path = path.dirname(path.abspath(__file__)) + "/jobs.json"
-        with open(json_path, 'r') as f:
-            json_data = json.load(f)
-            return json_data[str(self.job)]
-
     def set_stat_by_column(self, column, value):
         """
         Update a character's stats from column name in database
+        :param value: int or string
         :param column: string
         :return: boolean
         """
@@ -187,6 +197,7 @@ class Character:
             cursor = database.cursor(dictionary=True)
             cursor.execute(f"UPDATE characterstats SET {column} = '{value}' WHERE name = '{self.name}'")
             database.commit()
+            print(f"Successfully updated {column} value for character: {self.name}.")
             database.disconnect()
             return True
         except Exception as e:
