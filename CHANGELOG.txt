@@ -13,3 +13,7 @@ Change Log
 0.0.3 (11/10/2020)
 ------------------
 - Minor documentation edit
+
+0.0.4 (11/10/2020)
+------------------
+- fixed get_job_name()
