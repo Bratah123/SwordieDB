@@ -9,6 +9,7 @@ This API lets you have access to character stats as an object, allowing you to e
     `pip install swordiedb`
    - Too avoid any issues make sure to have these commands ran as well
     - `pip install -U setuptools`
+    
       `pip install -U wheel`
 - Now you should have access to swordie_db module
     - Import: `from swordie_db.database import SwordieDB`
