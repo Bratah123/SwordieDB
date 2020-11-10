@@ -94,7 +94,12 @@ class Character:
 
     @level.setter
     def level(self, x):
+        self.set_stat_by_column("level", x)
         self._level = x
+
+    def add_level(self, amount):
+        new_level = int(self.level) + amount
+        self.level = new_level
 
     @property
     def job(self):
@@ -102,11 +107,22 @@ class Character:
 
     @job.setter
     def job(self, job_id):
+        self.set_stat_by_column("job", job_id)
         self._job = job_id
 
     @property
     def name(self):
         return self._name
+
+    @name.setter
+    def name(self, new_name):
+        """
+        Set a new name for the character
+        :param new_name: string
+        :return: void
+        """
+        self.set_stat_by_column("name", new_name)
+        self._name = new_name
 
     @property
     def money(self):
@@ -116,6 +132,33 @@ class Character:
     def money(self, amount):
         self.set_stat_by_column("money", amount)
         self._money = amount
+
+    def add_mesos(self, amount):
+        """
+        Adds to the current meso count
+        :param amount: int
+        :return: void
+        """
+        new_amount = int(self.money) + amount
+        self.money = new_amount
+
+    @property
+    def fame(self):
+        return self._pop
+
+    @fame.setter
+    def fame(self, amount):
+        self.set_stat_by_column("pop", amount)
+        self._pop = amount
+
+    def add_fame(self, amount):
+        """
+        Adds to the current fame amount
+        :param amount: int
+        :return:
+        """
+        new_fame = int(self.fame) + amount
+        self.fame = new_fame
 
     def get_job_name(self):
         """
@@ -149,4 +192,3 @@ class Character:
         except Exception as e:
             print("[ERROR] Error trying to set stats in database.", e)
             return False
-
