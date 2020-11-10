@@ -1,4 +1,6 @@
-import mysql.connector
+import mysql.connector as con
+
+from swordie_db.character import Character
 
 
 class SwordieDB:
@@ -27,7 +29,7 @@ class SwordieDB:
 
     @property
     def user(self):
-        return self._schema
+        return self._user
 
     @user.setter
     def user(self, x):
@@ -35,8 +37,52 @@ class SwordieDB:
 
     @property
     def password(self):
-        return self._schema
+        return self._password
 
     @password.setter
     def password(self, x):
         self._password = x
+
+    def get_char_by_name(self, char_name):
+        """
+
+        :param char_name: string
+        :return: Character
+        """
+        try:
+            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema)
+            cursor = database.cursor(dictionary=True)
+            cursor.execute(f"SELECT * FROM characterstats WHERE name = '{char_name}'")
+            character_stats = cursor.fetchall()[0]  # It is 0 because there should only be one character with that name
+            database.disconnect()
+            database_config = {
+                "host": self.host,
+                "user": self.user,
+                "password": self.password,
+                "schema": self.schema
+            }
+            character = Character(character_stats, database_config)
+            return character
+        except Exception as e:
+            print("[ERROR] Error trying to retrieve character from database.", e)
+            return None
+
+    def set_char_stat(self, name, column, value):
+        """
+        Given a character name and column name, change it's value in the database
+        :param column: string
+        :param name: string
+        :param value: string/int
+        :return: boolean
+        """
+        try:
+            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema)
+            cursor = database.cursor(dictionary=True)
+            cursor.execute(f"UPDATE characterstats SET {column} = {value} WHERE name = '{name}'")
+            database.commit()
+            database.disconnect()
+            print(f"Successfully set {name}'s stats in database.")
+            return True
+        except Exception as e:
+            print("[ERROR] Error trying to update character stats in Database.", e)
+            return False
