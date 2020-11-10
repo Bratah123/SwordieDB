@@ -198,6 +198,7 @@ class Character:
             cursor.execute(f"UPDATE characterstats SET {column} = '{value}' WHERE name = '{self.name}'")
             database.commit()
             print(f"Successfully updated {column} value for character: {self.name}.")
+            self._stats[column] = value
             database.disconnect()
             return True
         except Exception as e:
