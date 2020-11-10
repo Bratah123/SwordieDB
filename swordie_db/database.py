@@ -45,7 +45,7 @@ class SwordieDB:
 
     def get_char_by_name(self, char_name):
         """
-
+        Create a character object from a given character name
         :param char_name: string
         :return: Character
         """
