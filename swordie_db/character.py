@@ -289,6 +289,58 @@ class Character:
         }
         return primary_stats
 
+    @property
+    def max_hp(self):
+        return self._max_hp
+
+    @max_hp.setter
+    def max_hp(self, amount):
+        self.set_stat_by_column("maxhp", amount)
+        self._max_hp = amount
+
+    def add_max_hp(self, amount):
+        new_hp = int(self.max_hp) + amount
+        self.max_hp = new_hp
+
+    @property
+    def max_mp(self):
+        return self._max_mp
+
+    @max_mp.setter
+    def max_mp(self, amount):
+        self.set_stat_by_column("maxmp", amount)
+        self._max_mp = amount
+
+    def add_max_mp(self, amount):
+        new_mp = int(self.max_mp) + amount
+        self.max_mp = new_mp
+
+    @property
+    def ap(self):
+        return self._ap
+
+    @ap.setter
+    def ap(self, amount):
+        self.set_stat_by_column("ap", amount)
+        self._ap = amount
+
+    def add_ap(self, amount):
+        new_ap = int(self.ap) + amount
+        self.ap = new_ap
+
+    @property
+    def sp(self):
+        return self._sp
+
+    @sp.setter
+    def sp(self, amount):
+        self.set_stat_by_column("sp", amount)
+        self._sp = amount
+
+    def add_sp(self, amount):
+        new_sp = int(self.sp) + amount
+        self.sp = new_sp
+
     def set_stat_by_column(self, column, value):
         """
         Update a character's stats from column name in database
