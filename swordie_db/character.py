@@ -203,3 +203,26 @@ class Character:
         except Exception as e:
             print("[ERROR] Error trying to set stats in database.", e)
             return False
+
+    def get_stat_by_column(self, column):
+        """
+        Given a column name, return it's value in the database
+        :param column: string
+        :return: string
+        """
+        host = self._database_config["host"]
+        user = self._database_config["user"]
+        password = self._database_config["password"]
+        schema = self._database_config["schema"]
+
+        try:
+            database = con.connect(host=host, user=user, password=password, database=schema)
+
+            cursor = database.cursor(dictionary=True)
+            cursor.execute(f"SELECT {column} FROM characterstats WHERE name = '{self.name}'")
+            column_value = cursor.fetchall()[0][column]
+            database.disconnect()
+            return column_value
+        except Exception as e:
+            print("[ERROR] Error trying to get stats in database.", e)
+            return False
