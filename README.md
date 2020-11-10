@@ -5,7 +5,7 @@ SwordieDB is a Maplestory Python-based pip package that allows access to informa
 This API lets you have access to character stats as an object, allowing you to edit any stats easily.
 
 ## Examples
-- How to get create a character object and swordie database object.
+- How to create a character object and swordie database object.
     ```python
     from swordie_db.database import SwordieDB
     
