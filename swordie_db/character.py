@@ -282,10 +282,10 @@ class Character:
         :return: dict
         """
         primary_stats = {
-            "str": self._strength,
-            "dex": self._dex,
-            "int": self._inte,
-            "luk": self._luk
+            "str": self.strength,
+            "dex": self.dex,
+            "int": self.inte,
+            "luk": self.luk
         }
         return primary_stats
 
