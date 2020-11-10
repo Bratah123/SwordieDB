@@ -1,4 +1,5 @@
 # SwordieDB
+https://pypi.org/project/swordiedb/
 
 SwordieDB is a Maplestory Python-based pip package that allows access to information in SwordieMS database.
 
