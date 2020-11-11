@@ -5,7 +5,9 @@ Use of this source code is governed by a MIT-style license that can be found in 
 Refer to database.py or the project wiki on GitHub for usage examples.
 """
 import mysql.connector as con
+
 from swordie_db import JOBS
+from swordie_db.user import User
 
 
 class Character:
@@ -16,6 +18,7 @@ class Character:
     This class contains the appropriate getter and setter methods for said attributes.
 
     Attributes:
+        user: User, A User object
         stats: Dictionary of all character stats obtained from the characterstats table
         level: Integer, representing character level
         job: Integer, representing character job ID
@@ -36,6 +39,7 @@ class Character:
         ap: Integer, representing character free Ability Points (AP) pool
         sp: Integer, representing character free SP points pool
     """
+
     def __init__(self, char_stats, database_config):
         """Emulates how character object is handled server-sided
 
@@ -79,6 +83,8 @@ class Character:
         self._sub_job = 0
         self.init_stats()
 
+        self._user = self.init_user()
+
     def init_stats(self):
         """Given a dictionary of stats from Swordie's DB we add them to Character object's attributes
 
@@ -117,6 +123,39 @@ class Character:
         self._position_map = self._stats["posmap"]
         self._portal = self._stats["portal"]
         self._sub_job = self._stats["subjob"]
+
+    def init_user(self):
+        """
+        A method that will automatically create a user object connected to the character's user attribute
+        :return: User
+        """
+
+        user_id = self.get_user_id()
+
+        try:
+            host = self._database_config["host"]
+            user = self._database_config["user"]
+            password = self._database_config["password"]
+            schema = self._database_config["schema"]
+            port = self._database_config["port"]
+
+            database = con.connect(host=host, user=user, password=password, database=schema, port=port)
+
+            cursor = database.cursor(dictionary=True)
+
+            cursor.execute(f"SELECT * FROM users WHERE id = '{user_id}'")
+
+            user_stats = cursor.fetchall()[0]
+            # The row will always be 0 because there should be no characters with the same name
+            user = User(user_stats, self.database_config)
+            return user
+
+        except Exception as e:
+            print("[ERROR] Error trying to retrieve User Data.", e)
+
+    @property
+    def database_config(self):
+        return self._database_config
 
     @property
     def stats(self):
@@ -419,12 +458,47 @@ class Character:
         new_sp = int(self.sp) + amount
         self.sp = new_sp
 
+    @property
+    def user(self):
+        return self._user
+
+    def get_user_id(self):
+        """
+        Created this method to avoid circular imports by using SwordieDB's get_user_id
+        :return:
+        """
+        host = self._database_config["host"]
+        user = self._database_config["user"]
+        password = self._database_config["password"]
+        schema = self._database_config["schema"]
+        port = self._database_config["port"]
+        try:
+            database = con.connect(host=host, user=user, password=password, database=schema, port=port)
+            cursor = database.cursor(dictionary=True)
+
+            cursor.execute(f"SELECT characterid FROM characterstats WHERE name = '{self.name}'")
+            char_id = cursor.fetchall()[0]["characterid"]
+
+            cursor.execute(f"SELECT accid FROM characters WHERE id = '{char_id}'")
+            account_id = cursor.fetchall()[0]["accid"]
+
+            cursor.execute(f"SELECT userid FROM accounts WHERE id = '{account_id}'")
+            user_id = cursor.fetchall()[0]["userid"]
+
+            database.disconnect()
+            return user_id
+
+        except Exception as e:
+            print("[ERROR] Error trying to get user id from database.", e)
+            return None  # Return None if there was an error
+
     def set_stat_by_column(self, column, value):
         """Update a character's stats from column name in database
 
         Grabs the database attributes provided through the class constructor.
         Uses these attributes to attempt a database connection.
         Attempts to update the field represented by the provided column in characterstats, with the provided value.
+        Not recommended to use this alone, as it won't update the character object which this was used from
 
         Args:
             value: int or string, representing the value to be set in the database
@@ -443,8 +517,10 @@ class Character:
         user = self._database_config["user"]
         password = self._database_config["password"]
         schema = self._database_config["schema"]
+        port = self._database_config["port"]
+
         try:
-            database = con.connect(host=host, user=user, password=password, database=schema)
+            database = con.connect(host=host, user=user, password=password, database=schema, port=port)
 
             cursor = database.cursor(dictionary=True)
             cursor.execute(f"UPDATE characterstats SET {column} = '{value}' WHERE name = '{self.name}'")

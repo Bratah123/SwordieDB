@@ -12,7 +12,6 @@ print("Job:", char.get_job_name())
 print("Mesos:", char.money)
 print("Fame:", char.fame)
 
-
 primary_stats = char.get_primary_stats()
 
 for stat in primary_stats:
@@ -22,4 +21,8 @@ for stat in primary_stats:
     # Int
     # Luk
 
+# User Class
 
+user = char.user
+user.ban_reason = "For hacking"
+user.is_admin()

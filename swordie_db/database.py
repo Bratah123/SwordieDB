@@ -15,6 +15,7 @@ Refer to the project wiki on GitHub for more in-depth examples.
 """
 import mysql.connector as con
 from swordie_db.character import Character
+from swordie_db.user import User
 
 
 class SwordieDB:
@@ -107,12 +108,39 @@ class SwordieDB:
                 "host": self.host,
                 "user": self.user,
                 "password": self.password,
-                "schema": self.schema
+                "schema": self.schema,
+                "port": self.port
             }
             character = Character(character_stats, database_config)
             return character
         except Exception as e:
             print("[ERROR] Error trying to retrieve character from database.", e)
+            return None
+
+    def get_user_by_username(self, username):
+        """
+        Given a username (NOT IGN), create a user object.
+        Useful for getting account information from accounts with no characters at all
+        :param username: string
+        :return: User
+        """
+        try:
+            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema, port=self.port)
+            cursor = database.cursor(dictionary=True)
+            cursor.execute(f"SELECT * FROM users WHERE name = '{username}'")
+            user_stats = cursor.fetchall()[0]  # It is 0 because there should only be one character with that name
+            database_config = {
+                "host": self.host,
+                "user": self.user,
+                "password": self.password,
+                "schema": self.schema,
+                "port": self.port
+            }
+            database.disconnect()
+            user = User(user_stats, database_config)
+            return user
+        except Exception as e:
+            print("[ERROR] Error trying to obtain a user object", e)
             return None
 
     def set_char_stat(self, name, column, value):

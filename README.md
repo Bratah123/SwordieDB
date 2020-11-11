@@ -9,7 +9,7 @@ The SwordieDB API allows access to character stats in the form of objects, for e
 **Overall Developmental Progress:** ![](https://progress-bar.dev/50) (arbitrary number - to be tracked by Brandon)  
   
 **Character Handling:** ![](https://progress-bar.dev/99)    
-**User Handling:** ![](https://progress-bar.dev/0)    
+**User Handling:** ![](https://progress-bar.dev/50)    
 **Inventory Handling:** ![](https://progress-bar.dev/0)    
 ## Installation
 Note: You are recommended to install to the project virtual environment.
