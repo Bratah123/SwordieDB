@@ -134,3 +134,7 @@ dmypy.json
 
 # PyCharm
 .idea/
+
+# VENV for KOOKIIE's tests - Python 3.6.12 & 3.9.0
+ver3612/
+ver390/
