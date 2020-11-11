@@ -11,10 +11,9 @@ The SwordieDB API allows access to character stats in the form of objects, for e
 Note: You are recommended to install to the project virtual environment.
 - In the python terminal type the follow command:
     `pip install swordiedb`
-   - Too avoid any issues make sure to have these commands ran as well
+   - Too avoid any issues make sure to have these commands ran prior too installing swordiedb
     - `pip install -U setuptools`
-    
-      `pip install -U wheel`
+    - `pip install -U wheel`
 - Now you should have access to swordie_db module
     - Import: `from swordie_db.database import SwordieDB`
 ## Examples

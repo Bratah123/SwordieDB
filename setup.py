@@ -10,15 +10,15 @@ classifiers = [
 
 setup(
     name='swordiedb',
-    version='0.0.5',
-    description='A database API for swordie-ms based maplestory sources',
+    version='0.0.6',
+    description='A database API for SwordieMS-based maplestory sources.',
     long_description=open('README.txt').read() + '\n\n' + open('CHANGELOG.txt').read(),
     url='',
     author='Brandon Nguyen',
     author_email='brandonnguyen3301@gmail.com',
     license='MIT',
     classifiers=classifiers,
-    keywords='database, swordie',
+    keywords='database, swordie, maplestory',
     packages=find_packages(),
     install_requires=['mysql-connector-python-rf']
 )
