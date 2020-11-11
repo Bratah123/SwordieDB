@@ -22,7 +22,7 @@ Note: You are recommended to install to the project virtual environment.
     - Try this import statement in the Python terminal: `from swordie_db.database import SwordieDB`
 - Then you are done! Refer to examples on how to use them. :octocat:
 ## Examples
-See the [Code Examples page](https://github.com/Bratah123/SwordieDB/wiki/Examples) for sample code fragments.
+See the [Code Examples page](https://github.com/Bratah123/SwordieDB/wiki/Sample-Code-Fragments) for sample code fragments.
 ## Technical Details
 Please refer to the [Technical Details page](https://github.com/Bratah123/SwordieDB/wiki/Technical-Details) for details, as well as detailed instructions for how to build this package for testing.  
 ## API Docs
