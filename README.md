@@ -24,9 +24,20 @@ See the [examples page](EXAMPLES.md) for sample code fragments.
 | Python | 3.6 | 3.8.5 |
 
 To be tested:
- - [ ] Python 3.9
+ - [ ] Python 3.8.6
     - TODO: KOOKIIE
  - [ ] Python 3.9
     - TODO: KOOKIIE
  - [ ] Python 3.10
     - Awaiting stable release
+    
+### How to build
+#### Generate the virtual environment
+  - In the root of the repository, create a virtual environment using `Python -m venv venv`
+    - Substitute "Python" with whichever command you have assigned to Python 3.6 - 3.8
+  - Activate the virtual environment using `call venv\scripts\activate.bat` in Command Prompt 
+    - The command is `venv/scripts/activate` in Power Shell
+    - Note: PowerShell can take both backslash and forward slashes, but CMD only accepts backslashes
+    - Note: You can deactivate the venv by using the command deactivate
+  - Use the command `venv/scripts/pip install -r requirements.txt` to install the required modules
+    - Use `venv\scripts\pip install wheel`, if the above commands throw errors
