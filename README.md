@@ -9,29 +9,29 @@ The SwordieDB API allows access to character stats in the form of objects, for e
 **Developmental Progress:** ![70%](https://progress-bar.dev/70) (arbitrary number - to be tracked by Brandon)  
 ## Installation
 Note: You are recommended to install to the project virtual environment.
-- In the python terminal type the follow command:
-    `pip install swordiedb`
-   - Too avoid any issues make sure to have these commands ran prior too installing swordiedb
-    - `pip install -U setuptools`
-    - `pip install -U wheel`
-- Now you should have access to swordie_db module
-    - Import: `from swordie_db.database import SwordieDB`
+- In the terminal type the follow command: `pip install swordiedb`  
+    - Note: use system shell and not the Python REPL for pip!
+    - To avoid any issues make sure to have these commands run prior to installing SwordieDB:
+        - `pip install -U setuptools`
+        - `pip install -U wheel`
+- Now to verify that you have access to the swordie_db module:
+    - Try this import statement in the Python terminal: `from swordie_db.database import SwordieDB`
 ## Examples
 See the [examples page](EXAMPLES.md) for sample code fragments.
 ## Technical Details
 |  | Target Minimum | Target Maximum |
 |---|---|---|
-| Python | 3.6 | 3.8.5 |
+| Python | 3.6 | 3.8.6 |
 
 To be tested:
- - [ ] Python 3.8.6
-    - TODO: KOOKIIE
+ - [x] Python 3.8.6
+    - Tested by: KOOKIIE
  - [ ] Python 3.9
     - TODO: KOOKIIE
  - [ ] Python 3.10
     - Awaiting stable release
     
-### How to build
+### How to test:
 #### Generate the virtual environment
   - In the root of the repository, create a virtual environment using `Python -m venv venv`
     - Substitute "Python" with whichever command you have assigned to Python 3.6 - 3.8
@@ -41,3 +41,8 @@ To be tested:
     - Note: You can deactivate the venv by using the command deactivate
   - Use the command `venv/scripts/pip install -r requirements.txt` to install the required modules
     - Use `venv\scripts\pip install wheel`, if the above commands throw errors
+#### Import the module
+  - In the root of the repository,activate the virtual environment (see above)
+  - Start the Python REPL: `venv/scripts/python`
+  - Import the module: `from swordie_db.database import SwordieDB`
+  - Proceed with testing. (See [examples](EXAMPLES.md))
