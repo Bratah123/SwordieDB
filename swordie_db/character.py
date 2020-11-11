@@ -146,7 +146,7 @@ class Character:
         :return: void
         """
         new_amount = int(self.money) + amount
-        self.money = new_amount
+        self.money = str(new_amount)  # money is a String; converting back to String for consistency
 
     @property
     def fame(self):
@@ -218,7 +218,7 @@ class Character:
         :return: void
         """
         new_exp = int(self.exp) + amount
-        self.exp = new_exp
+        self.exp = str(new_exp)  # EXP is a String; converting back to String for consistency
 
     @property
     def strength(self):
