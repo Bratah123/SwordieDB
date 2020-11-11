@@ -17,3 +17,7 @@ Change Log
 0.0.4 (11/10/2020)
 ------------------
 - fixed get_job_name()
+
+0.0.5 (11/10/2020)
+------------------
+- Added a port parameter to SwordieDB Constructor
