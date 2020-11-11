@@ -89,10 +89,8 @@ print("----------------------------------")
 # Character info setting tests
 print("Checking the ability to write the following information to DB: ")
 print("    > Mesos; Fame. \n")
-print("Resetting meso and fame to 0, and subsequently setting new values for them.")
-char.money = "0"  # reset to baseline
+# Set values for Meso and Fame
 char.money = "314159" # Sets money to 314,159 mesos in the database
-char.fame = 0  # reset to baseline
 char.fame = 3  # Sets fame to 3 in the database
 
 meso = char.money  # re-fetch data
@@ -110,5 +108,137 @@ char.add_fame(28) # Adds 28 fame to the existing count and saves to database
 fame = char.fame  # re-fetch data
 assert fame == 31, f"Fame adding test failed! Fame count: {fame}; Type: {type(fame)}"
 char.fame = 0  # reset to baseline
-print("Char info write tests complete!")
+
+
+print("\nChecking the ability to write the following information to DB: ")
+print("    > Level; Job ID; Name; Map. \n")
+# Set values for Level, Job ID, Name, and Map
+char.level = 10
+char.job = 100  # set job ID to warrior
+char.name = "Kookiie"
+char.map = "100000000"
+
+level = char.level  # re-fetch data
+assert level == 10, f"Character level setting test failed! Level count: {level}; Type: {type(level)}"
+char.add_level(21)  # Adds 21 to the existing count and saves to database
+# character is now level 31
+level = char.level  # re-fetch data
+assert level == 31, f"Character level adding test failed! Level count: {level}; Type: {type(level)}"
+char.level = 1  # reset to baseline
+
+job_id = char.job  # re-fetch data
+assert job_id == 100, f"Job ID setting test failed! Job ID: {job_id}; Type: {type(job_id)}"
+char.job = 0  # reset job ID to beginner
+
+name = char.name  # re-fetch data
+assert name == "Kookiie", f"Name setting test failed! Name: {name}; Type: {type(name)}"
+char.name = "Kookiiee"  # reset to baseline
+
+map = char.map  # re-fetch data
+assert map == "100000000", f"Map ID setting test failed! Map ID: {map}; Type: {type(map)}"
+char.map = 4000011  # reset to baseline
+
+
+print("\nChecking the ability to write the following information to DB: ")
+print("    > Face; Hair; Skin; EXP. \n")
+# Set values for Face, Hair, Skin, EXP
+char.face = 20010
+char.hair = 30027
+char.skin = 2
+char.exp = "314159"
+
+face = char.face  # re-fetch data
+assert face == 20010, f"Face ID setting test failed! Face ID: {face}; Type: {type(face)}"
+char.face = 23300  # reset to baseline
+
+hair = char.hair  # re-fetch data
+assert hair == 30027, f"Hair ID setting test failed! Hair ID: {hair}; Type: {type(hair)}"
+char.hair = 36786  # reset to baseline
+
+skin = char.skin  # re-fetch data
+assert skin == 2, f"Skin ID setting test failed! Skin ID: {skin}; Type: {type(skin)}"
+char.skin = 0  # reset to baseline
+
+exp = char.exp  # re-fetch data
+assert exp == "314159", f"EXP test setting failed! EXP amount: {exp}; Type: {type(exp)}"
+char.add_exp(2827433)
+exp = char.exp  # re-fetch data
+assert exp == "3141592", f"EXP test adding failed! EXP amount: {exp}; Type: {type(exp)}"
+char.exp = "0"  # reset to baseline
+
+
+print("\nChecking the ability to write the following information to DB: ")
+print("    > STR; DEX; INT; LUK. \n")
+# Set values for STR, DEX, INT, LUK
+char.strength = 31
+char.dex = 31
+char.inte = 31
+char.luk = 31
+
+strength = char.strength  # re-fetch data
+assert strength == 31, f"STR setting test failed! STR amount: {strength}; Type: {type(strength)}"
+char.add_str(1)
+strength = char.strength  # re-fetch data
+assert strength == 32, f"STR adding test failed! STR amount: {strength}; Type: {type(strength)}"
+char.strength = 12  # reset to baseline
+
+dex = char.dex  # re-fetch data
+assert dex == 31, f"DEX setting test failed! DEX amount: {dex}; Type: {type(dex)}"
+char.add_dex(1)
+dex = char.dex  # re-fetch data
+assert dex == 32, f"DEX adding test failed! DEX amount: {dex}; Type: {type(dex)}"
+char.dex = 5  # reset to baseline
+
+inte = char.inte  # re-fetch data
+assert inte == 31, f"INT setting test failed! INT amount: {inte}; Type: {type(inte)}"
+char.add_inte(1)
+inte = char.inte  # re-fetch data
+assert inte == 32, f"INT adding test failed! INT amount: {inte}; Type: {type(inte)}"
+char.inte = 4  # reset to baseline
+
+luk = char.luk  # re-fetch data
+assert luk == 31, f"LUK setting test failed! LUK amount: {luk}; Type: {type(luk)}"
+char.add_luk(1)
+luk = char.luk  # re-fetch data
+assert luk == 32, f"LUK adding test failed! LUK amount: {luk}; Type: {type(luk)}"
+char.luk = 4  # reset to baseline
+
+
+print("\nChecking the ability to write the following information to DB: ")
+print("    > HP; MP; AP; SP. \n")
+# Set values for HP, MP, AP, SP
+char.max_hp = 31
+char.max_mp = 31
+char.ap = 31
+char.sp = 31
+
+hp = char.max_hp  # re-fetch data
+assert hp == 31, f"HP setting test failed! HP amount: {hp}; Type: {type(hp)}"
+char.add_max_hp(1)
+hp = char.max_hp  # re-fetch data
+assert hp == 32, f"HP adding test failed! HP amount: {hp}; Type: {type(hp)}"
+char.max_hp = 50  # reset to baseline
+
+mp = char.max_mp  # re-fetch data
+assert mp == 31, f"MP setting test failed! MP amount: {mp}; Type: {type(mp)}"
+char.add_max_mp(1)
+mp = char.max_mp  # re-fetch data
+assert mp == 32, f"MP adding test failed! MP amount: {mp}; Type: {type(mp)}"
+char.max_mp = 0  # reset to baseline
+
+ap = char.ap  # re-fetch data
+assert ap == 31, f"AP setting test failed! AP amount: {ap}; Type: {type(ap)}"
+char.add_ap(1)
+ap = char.ap  # re-fetch data
+assert ap == 32, f"AP adding test failed! AP amount: {ap}; Type: {type(ap)}"
+char.ap = 0  # reset to baseline
+
+sp = char.sp  # re-fetch data
+assert sp == 31, f"SP setting test failed! SP amount: {sp}; Type: {type(sp)}"
+char.add_sp(1)
+sp = char.sp  # re-fetch data
+assert sp == 32, f"SP adding test failed! SP amount: {sp}; Type: {type(sp)}"
+char.sp = 0  # reset to baseline
+
+print("\nChar info write tests complete!")
 print("----------------------------------")
