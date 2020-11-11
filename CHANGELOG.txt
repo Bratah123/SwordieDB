@@ -21,3 +21,8 @@ Change Log
 0.0.5 (11/10/2020)
 ------------------
 - Added a port parameter to SwordieDB Constructor
+
+0.0.6 (11/10/2020)
+------------------
+- Fixed getting getting a job's name from the job id
+- Minor Documentation tweaks
