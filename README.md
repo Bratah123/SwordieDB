@@ -8,7 +8,7 @@ The SwordieDB API allows access to character stats in the form of objects, for e
 #### **Current Status:** In Active Development  
 **Overall Developmental Progress:** ![](https://progress-bar.dev/50) (arbitrary number - to be tracked by Brandon)  
   
-**Character Handling:** ![](https://progress-bar.dev/100)    
+**Character Handling:** ![](https://progress-bar.dev/99)    
 **User Handling:** ![](https://progress-bar.dev/0)    
 **Inventory Handling:** ![](https://progress-bar.dev/0)    
 ## Installation
@@ -20,6 +20,7 @@ Note: You are recommended to install to the project virtual environment.
         - `pip install -U wheel`
 - Now to verify that you have access to the swordie_db module:
     - Try this import statement in the Python terminal: `from swordie_db.database import SwordieDB`
+- Then you are done! Refer to examples on how to use them. :octocat:
 ## Examples
 See the [Code Examples page](https://github.com/Bratah123/SwordieDB/wiki/Examples) for sample code fragments.
 ## Technical Details
