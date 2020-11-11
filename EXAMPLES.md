@@ -11,9 +11,18 @@
 - Creating a database object with specific login information.
     ```python
     from swordie_db.database import SwordieDB
+    # Default Values
+    # host = "localhost"
+    # user = "root"
+    # password = ""
+    # schema = "swordie"
+    # port = 3306 (int)
     
     # Parameters for creating a Swordie database object
-    swordie = SwordieDB(host="53.153.23.124", password="password", user="root", schema="swordie")
+    swordie = SwordieDB(host="53.153.23.124", password="password", user="root", schema="swordie", port=3306)
+
+    # All Parameters are optional
+    swordie_with_schema = SwordieDB(schema="spirit") # This is also a legal/functional instantiation.
     ```
 - Getting information from a character (getters).
     ```python
