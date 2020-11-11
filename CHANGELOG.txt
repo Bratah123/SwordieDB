@@ -26,3 +26,10 @@ Change Log
 ------------------
 - Fixed getting getting a job's name from the job id
 - Minor Documentation tweaks
+
+0.1.0 (11/10/2020)
+------------------
+- Character Handling is now 100% working and tested
+- Removed unnecessary imports
+- Fixed missing Job IDs
+- Minor Documentation Updates

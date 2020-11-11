@@ -10,7 +10,7 @@ classifiers = [
 
 setup(
     name='swordiedb',
-    version='0.0.6',
+    version='0.1.0',
     description='A database API for SwordieMS-based maplestory sources.',
     long_description=open('README.txt').read() + '\n\n' + open('CHANGELOG.txt').read(),
     url='',
