@@ -4,22 +4,22 @@ swordie_data = SwordieDB()  # If no parameters are given, it will attempt to con
 
 char = swordie_data.get_char_by_name("brandon")
 
-if char is None:
-    print("Character does not exist")
-else:
-    print("Character Name:", char.name)
-    print("Character Level:", char.level)
-    print("Job:", char.get_job_name())
-    print("Mesos:", char.money)
-    print("Fame:", char.fame)
+assert char is not None, "Character does not exist"
 
-    primary_stats = char.get_primary_stats()
+print("Character Name:", char.name)
+print("Character Level:", char.level)
+print("Job:", char.get_job_name())
+print("Mesos:", char.money)
+print("Fame:", char.fame)
 
-    for stat in primary_stats:
-        print(f"{stat}: {primary_stats[stat]}")
-        # Str
-        # Dex
-        # Int
-        # Luk
+
+primary_stats = char.get_primary_stats()
+
+for stat in primary_stats:
+    print(f"{stat}: {primary_stats[stat]}")
+    # Str
+    # Dex
+    # Int
+    # Luk
 
 

@@ -1,7 +1,5 @@
-import json
 import mysql.connector as con
 from swordie_db import JOBS
-from os import path
 
 
 class Character:
