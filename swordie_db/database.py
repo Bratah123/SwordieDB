@@ -85,7 +85,7 @@ class SwordieDB:
         :return: boolean
         """
         try:
-            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema)
+            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema, port=self.port)
             cursor = database.cursor(dictionary=True)
             cursor.execute(f"UPDATE characterstats SET {column} = '{value}' WHERE name = '{name}'")
             database.commit()
@@ -103,7 +103,7 @@ class SwordieDB:
         :return: string / None
         """
         try:
-            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema)
+            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema, port=self.port)
             cursor = database.cursor(dictionary=True)
 
             cursor.execute(f"SELECT characterid FROM characterstats WHERE name = '{char_name}'")
