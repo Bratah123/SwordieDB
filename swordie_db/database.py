@@ -5,11 +5,12 @@ from swordie_db.character import Character
 
 class SwordieDB:
 
-    def __init__(self, host="localhost", schema="swordie", user="root", password=""):
+    def __init__(self, host="localhost", schema="swordie", user="root", password="", port=3306):
         self._host = host
         self._schema = schema
         self._user = user
         self._password = password
+        self._port = port
 
     @property
     def host(self):
@@ -43,6 +44,14 @@ class SwordieDB:
     def password(self, x):
         self._password = x
 
+    @property
+    def port(self):
+        return self._port
+
+    @port.setter
+    def port(self, new_port):
+        self._port = new_port
+
     def get_char_by_name(self, char_name):
         """
         Create a character object from a given character name
@@ -50,7 +59,7 @@ class SwordieDB:
         :return: Character
         """
         try:
-            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema)
+            database = con.connect(host=self.host, user=self.user, password=self.password, database=self.schema, port=self.port)
             cursor = database.cursor(dictionary=True)
             cursor.execute(f"SELECT * FROM characterstats WHERE name = '{char_name}'")
             character_stats = cursor.fetchall()[0]  # It is 0 because there should only be one character with that name
