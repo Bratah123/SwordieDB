@@ -1,5 +1,6 @@
 import json
 import mysql.connector as con
+from swordie_db import JOBS
 from os import path
 
 
@@ -115,10 +116,7 @@ class Character:
         Returns the actual name of the job from job id
         :return: String
         """
-        json_path = path.dirname(path.abspath(__file__)) + "/jobs.json"
-        with open(json_path, 'r') as f:
-            json_data = json.load(f)
-            return json_data[str(self.job)]
+        return JOBS[str(self.job)]
 
     @property
     def name(self):
