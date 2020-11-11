@@ -1,14 +1,47 @@
+"""This module holds the Character class for the SwordieDB package.
+
+Copyright 2020 TEAM SPIRIT. All rights reserved.
+Use of this source code is governed by a MIT-style license that can be found in the LICENSE file.
+Refer to database.py or the project wiki on GitHub for usage examples.
+"""
 import mysql.connector as con
 from swordie_db import JOBS
 
 
 class Character:
+    """Character object; models SwordieMS characters.
 
+    Using instance method SwordieDB::get_char_by_name(name) will create a Character object instance with
+    attributes identical to the character with IGN "name" in the connected Swordie-based database.
+    This class contains the appropriate getter and setter methods for said attributes.
+
+    Attributes:
+        stats: Dictionary of all character stats obtained from the characterstats table
+        level: Integer, representing character level
+        job: Integer, representing character job ID
+        name: String, representing character name (aka IGN)
+        money: String, representing character wealth (aka Meso count)
+        fame: Integer, representing character popularity
+        map: String, representing the Map ID of the map that the character is currently in
+        face: Integer, representing the Face ID of the character
+        hair: Integer, representing the Hair ID of the character
+        skin: Integer, representing the Skin ID of the character
+        exp: String, representing character EXP pool (amount)
+        strength: Integer, representing character STR stat pool
+        dex: Integer, representing character DEX stat pool
+        inte: Integer, representing character INT stat pool
+        luk: Integer, representing character LUK stat pool
+        max_hp: Integer, representing character Max HP stat pool
+        max_mp: Integer, representing character Max MP stat pool
+        ap: Integer, representing character free Ability Points (AP) pool
+        sp: Integer, representing character free SP points pool
+    """
     def __init__(self, char_stats, database_config):
-        """
-        Emulates how character object is handled server-sided
-        :param char_stats: dict
-        :param database_config: dict
+        """Emulates how character object is handled server-sided
+
+        Args:
+            char_stats: dictionary of character stats, formatted in SwordieMS style
+            database_config: dictionary of protected attributes from a SwordieDB object
         """
         self._stats = char_stats
         self._database_config = database_config
@@ -47,9 +80,11 @@ class Character:
         self.init_stats()
 
     def init_stats(self):
-        """
-        Given a dictionary of stats from Swordie's DB we add them to character's attributes
-        :return: void
+        """Given a dictionary of stats from Swordie's DB we add them to Character object's attributes
+
+        Runs at the end of Character::__init__(char_stats, database_config).
+        It assigns the character stats in char_stats to their respective protected attributes belonging to
+        the Character object.
         """
         self._vague_id = self._stats["id"]
         self._character_id = self._stats["characterid"]
@@ -97,6 +132,11 @@ class Character:
         self._level = x
 
     def add_level(self, amount):
+        """Adds the specified amount to the current level count
+
+        Args:
+            amount: Int, representing the number of levels to be added to the current count
+        """
         new_level = int(self.level) + amount
         self.level = new_level
 
@@ -110,9 +150,10 @@ class Character:
         self._job = job_id
 
     def get_job_name(self):
-        """
-        Returns the actual name of the job from job id
-        :return: String
+        """Returns the actual name of the job from job id
+
+        Returns:
+            String, representing the job name corresponding to a job ID
         """
         return JOBS[str(self.job)]
 
@@ -122,10 +163,10 @@ class Character:
 
     @name.setter
     def name(self, new_name):
-        """
-        Set a new name for the character
-        :param new_name: string
-        :return: void
+        """Set a new name for the character
+
+        Args:
+            new_name: string, representing the new character name that will be set in the database
         """
         self.set_stat_by_column("name", new_name)
         self._name = new_name
@@ -140,10 +181,10 @@ class Character:
         self._money = amount
 
     def add_mesos(self, amount):
-        """
-        Adds to the current meso count
-        :param amount: int
-        :return: void
+        """Adds the specified amount to the current meso count
+
+        Args:
+            amount: Int, representing the amount of mesos to be added to the current count
         """
         new_amount = int(self.money) + amount
         self.money = str(new_amount)  # money is a String; converting back to String for consistency
@@ -158,10 +199,10 @@ class Character:
         self._pop = amount
 
     def add_fame(self, amount):
-        """
-        Adds to the current fame amount
-        :param amount: int
-        :return:
+        """Adds the specified amount to the current fame count
+
+        Args:
+            amount: Int, representing the number of fames to be added to the current count
         """
         new_fame = int(self.fame) + amount
         self.fame = new_fame
@@ -212,10 +253,10 @@ class Character:
         self._exp = exp_amount
 
     def add_exp(self, amount):
-        """
-        Add to the current existing exp pool
-        :param amount: int
-        :return: void
+        """Add the specified amount to the current existing EXP pool
+
+        Args:
+            amount: Int, representing the amount of EXP to be added to the current pool
         """
         new_exp = int(self.exp) + amount
         self.exp = str(new_exp)  # EXP is a String; converting back to String for consistency
@@ -230,6 +271,11 @@ class Character:
         self._strength = amount
 
     def add_str(self, amount):
+        """Add the specified amount to the current existing STR pool
+
+        Args:
+            amount: Int, representing the amount of STR to be added to the current pool
+        """
         new_str = int(self.strength) + amount
         self.strength = new_str
 
@@ -243,6 +289,11 @@ class Character:
         self._dex = amount
 
     def add_dex(self, amount):
+        """Add the specified amount to the current existing DEX pool
+
+        Args:
+            amount: Int, representing the amount of DEX to be added to the current pool
+        """
         new_dex = int(self.dex) + amount
         self.dex = new_dex
 
@@ -256,6 +307,11 @@ class Character:
         self._inte = amount
 
     def add_inte(self, amount):
+        """Add the specified amount to the current existing INT pool
+
+        Args:
+            amount: Int, representing the amount of INT to be added to the current pool
+        """
         new_inte = int(self.inte) + amount
         self.inte = new_inte
 
@@ -269,13 +325,19 @@ class Character:
         self._luk = amount
 
     def add_luk(self, amount):
+        """Add the specified amount to the current existing LUK pool
+
+        Args:
+            amount: Int, representing the amount of LUK to be added to the current pool
+        """
         new_luk = int(self.luk) + amount
         self.luk = new_luk
 
     def get_primary_stats(self):
-        """
-        Returns str, int, dex, luk in a dictionary
-        :return: dict
+        """Returns str, int, dex, luk values in a dictionary
+
+        Returns:
+            dictionary of primary stats
         """
         primary_stats = {
             "str": self.strength,
@@ -295,6 +357,11 @@ class Character:
         self._max_hp = amount
 
     def add_max_hp(self, amount):
+        """Add the specified amount to the current existing Max HP pool
+
+        Args:
+            amount: Int, representing the amount of Max HP to be added to the current pool
+        """
         new_hp = int(self.max_hp) + amount
         self.max_hp = new_hp
 
@@ -308,6 +375,11 @@ class Character:
         self._max_mp = amount
 
     def add_max_mp(self, amount):
+        """Add the specified amount to the current existing Max MP pool
+
+        Args:
+            amount: Int, representing the amount of max MP to be added to the current pool
+        """
         new_mp = int(self.max_mp) + amount
         self.max_mp = new_mp
 
@@ -321,6 +393,11 @@ class Character:
         self._ap = amount
 
     def add_ap(self, amount):
+        """Add the specified amount to the current existing free AP pool
+
+        Args:
+            amount: Int, representing the amount of free AP to be added to the current pool
+        """
         new_ap = int(self.ap) + amount
         self.ap = new_ap
 
@@ -334,15 +411,32 @@ class Character:
         self._sp = amount
 
     def add_sp(self, amount):
+        """Add the specified amount to the current existing free SP pool
+
+        Args:
+            amount: Int, representing the amount of free SP to be added to the current pool
+        """
         new_sp = int(self.sp) + amount
         self.sp = new_sp
 
     def set_stat_by_column(self, column, value):
-        """
-        Update a character's stats from column name in database
-        :param value: int or string
-        :param column: string
-        :return: boolean
+        """Update a character's stats from column name in database
+
+        Grabs the database attributes provided through the class constructor.
+        Uses these attributes to attempt a database connection.
+        Attempts to update the field represented by the provided column in characterstats, with the provided value.
+
+        Args:
+            value: int or string, representing the value to be set in the database
+            column: string, representing the column in the database that is to be updated
+
+        Returns:
+            A boolean representing whether the operation was successful.
+
+        Raises:
+            SQL Error 2003: Can't cannect to DB
+            WinError 10060: No response from DB
+            List index out of range: Wrong column name
         """
 
         host = self._database_config["host"]
@@ -364,10 +458,18 @@ class Character:
             return False
 
     def get_stat_by_column(self, column):
-        """
-        Given a column name, return it's value in the database
-        :param column: string
-        :return: string
+        """Given a column name, return its value in the database
+
+        Args:
+            column: string, representing the column in the database from which the value is to be fetched from
+
+        Returns:
+            string, representing the value in the database associated with the provided column
+
+        Raises:
+            SQL Error 2003: Can't cannect to DB
+            WinError 10060: No response from DB
+            List index out of range: Wrong column name
         """
         try:
             return self.stats[column]

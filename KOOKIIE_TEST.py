@@ -1,4 +1,8 @@
-# This is a unit test for checking basic functionality
+"""This is a unit test for checking basic functionality
+
+This can be run directly for a quick test of functionality (only supports KOOKIIE's DB at the moment)
+Copyright KOOKIIE Studios 2020. All rights reserved.
+"""
 from swordie_db.database import SwordieDB
 
 print("This is a unit test for checking basic functionality.")

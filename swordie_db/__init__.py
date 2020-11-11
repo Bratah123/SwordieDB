@@ -1,3 +1,9 @@
+"""This is the init file for the package.
+
+Copyright 2020 TEAM SPIRIT. All rights reserved.
+Use of this source code is governed by a MIT-style license that can be found in the LICENSE file.
+This module provides a dictionary mapping all Job IDs to their respective Job names
+"""
 JOBS = {
     "0": "Beginner",
     "100": "Warrior",
