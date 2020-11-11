@@ -25,3 +25,5 @@ Note: You are recommended to install to the project virtual environment.
 See the [Code Examples page](https://github.com/Bratah123/SwordieDB/wiki/Examples) for sample code fragments.
 ## Technical Details
 Please refer to the [Technical Details page](https://github.com/Bratah123/SwordieDB/wiki/Technical-Details) for details, as well as detailed instructions for how to build this package for testing.  
+## API Docs
+The API Docs have been split out into a sister project [here](https://kookiiestudios.github.io/ProjectShieldieDB/).
