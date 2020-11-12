@@ -38,6 +38,7 @@ class Character:
         max_mp: Integer, representing character Max MP stat pool
         ap: Integer, representing character free Ability Points (AP) pool
         sp: Integer, representing character free SP points pool
+        equip_inv_id: Integer, representing the "equip" inventory id
         equipped_inv_id: Integer, representing the "equipped" (i.e. Hotkey "E" in-game) inventory id
         consume_inv_id: Integer, representing "consume" (aka USE) inventory id
         etc_inv_id: Integer, representing "etc" (aka ETC) inventory id
@@ -89,6 +90,7 @@ class Character:
         self.init_stats()
 
         # These attributes are separate from characterstats table in database
+        self._equip_inv_id = 0
         self._equipped_inv_id = 0
         self._consume_inv_id = 0
         self._etc_inv_id = 0
@@ -178,7 +180,8 @@ class Character:
             f"SELECT equippedinventory, consumeinventory, etcinventory, installinventory, cashinventory "
             f"FROM characters WHERE id = '{self.character_id}'"
         )  # The row will always be 0 because there should be no characters with the same ID
-        
+
+        self._equip_inv_id = inventory_ids["equipinventory"]
         self._equipped_inv_id = inventory_ids["equippedinventory"]
         self._consume_inv_id = inventory_ids["consumeinventory"]
         self._etc_inv_id = inventory_ids["etcinventory"]
@@ -550,6 +553,10 @@ class Character:
     @property
     def cash_inv_id(self):
         return self._cash_inv_id
+
+    @property
+    def equip_inv_id(self):
+        return self._equip_inv_id
 
     def get_user_id(self):
         """Queries the database to obtain the User ID associated with this character instance
