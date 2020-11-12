@@ -36,7 +36,7 @@ class User:
         self._ban_reason = self._user_stats["banReason"]
         self._vote_points = self._user_stats["votepoints"]
         self._donation_points = self._user_stats["donationpoints"]
-        self._maple_points = self._user_stats["maplepoints"]
+        self._maple_points = self._user_stats["maplePoints"]
         self._account_type = self._user_stats["accounttype"]
 
     @property
