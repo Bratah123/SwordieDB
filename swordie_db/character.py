@@ -152,13 +152,13 @@ class Character:
         Raises:
             Generic error on failure - handled by the Character::get_db() method
         """
-
         user_id = self.get_user_id()
         
-        user_stats = get_db(
-            self._database_config, 
+        user_stats = self.get_db(
+            self._database_config,
             f"SELECT * FROM users WHERE id = '{user_id}'"
         )  # The row will always be 0 because there should be no characters with the same name
+
         user = User(user_stats, self.database_config)
         return user
 
@@ -173,9 +173,10 @@ class Character:
         Raises:
             Generic error on failure - handled by the Character::get_db() method
         """
-        inventory_ids = get_db(
-            self._database_config, 
-            f"SELECT equippedinventory, consumeinventory, etcinventory, installinventory, cashinventory FROM characters WHERE id = '{self.character_id}'"
+        inventory_ids = self.get_db(
+            self._database_config,
+            f"SELECT equippedinventory, consumeinventory, etcinventory, installinventory, cashinventory "
+            f"FROM characters WHERE id = '{self.character_id}'"
         )  # The row will always be 0 because there should be no characters with the same ID
         
         self._equipped_inv_id = inventory_ids["equippedinventory"]
@@ -189,7 +190,9 @@ class Character:
     def get_db(config, query):
         """Generic static method for fetching data from DB using the provided DB config and query
         
-        This method assumes that only one character is found - it always defaults to the first result
+        This method assumes that only one character is found - it always defaults to the first result.
+        An effort has been made to convert this to a decorator so that it may also be applied to
+        Character::set_stat_by_column() & Character::get_user_id(), which ultimately ended in failure.
         
         Args:
             config, dictionary, representing database config attributes
