@@ -40,3 +40,7 @@ Change Log
 - Added new helper methods to existing classes
 - Fixed some functions not using custom port in SwordieDB
 - Documentation addition in github wiki
+
+0.1.2 (11/11/2020)
+------------------
+- Fixed User Class instantiation
