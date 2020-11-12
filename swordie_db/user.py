@@ -57,7 +57,7 @@ class User:
         self._vote_points = self._user_stats["votepoints"]
         self._donation_points = self._user_stats["donationpoints"]
         self._maple_points = self._user_stats["maplePoints"]
-        self._maple_points = self._user_stats["nxPrepaid"]
+        self._nx_prepaid = self._user_stats["nxPrepaid"]
         self._account_type = self._user_stats["accounttype"]
 
     @property
@@ -200,6 +200,19 @@ class User:
             return "Intern"
         elif self.account_type == 5:
             return "Tester"
+
+    @property
+    def nx_prepaid(self):
+        return self._nx_prepaid
+
+    @nx_prepaid.setter
+    def nx_prepaid(self, amount):
+        self.set_stat_by_column("nxPrepaid", amount)
+        self._nx_prepaid = amount
+
+    def add_nx_prepaid(self, amount):
+        new_nx = int(amount) + self.nx_prepaid
+        self.nx_prepaid = new_nx
 
     def get_stat_by_column(self, column):
         """Fetches user attribute by column name
