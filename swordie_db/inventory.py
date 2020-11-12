@@ -19,6 +19,7 @@ class Inventory:
         self._use_inv = self.init_use_inv()
         self._etc_inv = self.init_etc_inv()
         self._cash_inv = self.init_cash_inv()
+        self._install_inv = self.init_install_inv()
 
         self._equipped_inv = self.init_equipped_inv()
 
@@ -47,6 +48,10 @@ class Inventory:
         return self._cash_inv
 
     @property
+    def install_inv(self):
+        return self._install_inv
+
+    @property
     def equipped_inv(self):
         return self._equipped_inv
 
@@ -64,6 +69,9 @@ class Inventory:
 
     def init_equipped_inv(self):
         return self.load_inv("equipped_inv_id")
+
+    def init_install_inv(self):
+        return self.load_inv("install_inv_id")
 
     def load_inv(self, inventory_type):
         """
