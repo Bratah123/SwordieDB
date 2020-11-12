@@ -112,16 +112,16 @@ class User:
         self._account_type = acc_type
 
     def give_admin(self):
-        self.set_stat_by_column("accounttype", 4)
         self.account_type = 4
 
     def give_intern(self):
-        self.set_stat_by_column("accounttype", 3)
         self.account_type = 3
 
     def give_tester(self):
-        self.set_stat_by_column("accounttype", 5)
         self.account_type = 5
+
+    def give_player(self):
+        self.account_type = 0
 
     def is_admin(self):
         return self.account_type == 4 or self.account_type == "4"  # A string check just in case
