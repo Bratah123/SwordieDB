@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+0.2.0 (11/12/2020)
+------------------
+- Raised minor version to 2 as all of User and Character functionality has been tested to work!
+- Updated documentation to Google Conventions (Kookiie)
+
 0.1.4 (11/12/2020)
 ------------------
 - Added nxPrepaid support to user
@@ -35,7 +40,7 @@ Change Log
 
 0.0.6 (11/10/2020)
 ------------------
-- Fixed getting getting a job's name from the job id
+- Fixed getting a job's name from the job id
 - Minor Documentation tweaks
 
 0.0.5 (11/10/2020)
