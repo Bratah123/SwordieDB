@@ -211,6 +211,11 @@ class User:
         self._nx_prepaid = amount
 
     def add_nx_prepaid(self, amount):
+        """Adds the specified amount to the current NX pool
+
+        Args:
+            amount: Int, representing the amount of NX to be added to the NX pool
+        """
         new_nx = int(amount) + self.nx_prepaid
         self.nx_prepaid = new_nx
 
