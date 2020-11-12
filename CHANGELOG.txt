@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+0.2.2 (11/12/2020)
+------------------
+- Added setup inventory support
+- Added more examples on how to use inventory class
+
 0.2.1 (11/12/2020)
 ------------------
 - Refactor to how database calls are used in character class
