@@ -20,6 +20,7 @@ class User:
         ban_reason: String (256 Char), representing the reason the user is banned
         donation_points: Integer, representing the amount of DP the user has
         maple_points: Integer, representing the amount of Maple Points the user has
+        nx_prepaid: Integer, representing the amoung of NX Prepaid the user has
         user_id: Integer, representing the User ID
         vote_points: Integer, representing the amount of VP the user has
     """
@@ -40,6 +41,7 @@ class User:
         self._vote_points = 0
         self._donation_points = 0
         self._maple_points = 0
+        self._nx_prepaid = 0
         self._account_type = 0
         self.init_user_stats()
 
@@ -55,6 +57,7 @@ class User:
         self._vote_points = self._user_stats["votepoints"]
         self._donation_points = self._user_stats["donationpoints"]
         self._maple_points = self._user_stats["maplePoints"]
+        self._maple_points = self._user_stats["nxPrepaid"]
         self._account_type = self._user_stats["accounttype"]
 
     @property
@@ -217,7 +220,7 @@ class User:
         Grabs the database attributes provided through the class constructor.
         Uses these attributes to attempt a database connection.
         Attempts to update the field represented by the provided column in the users table, with the provided value.
-        Not recommended to use this alone, as it won't update the character object which this was used from
+        Not recommended to use this alone, as it won't update the user object which this was used from
 
         Args:
             value: int or string, representing the value to be set in the database
