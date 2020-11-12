@@ -1,5 +1,13 @@
 Change Log
 ==========
+
+0.1.3 (11/12/2020)
+------------------
+- Fixed an accidental recursive call of donation_points setter
+- Unit testing for User Class is completed with 100% working functions
+- Updated docstring to Google conventions
+- Changelog is now reversed
+
 0.1.2 (11/11/2020)
 ------------------
 - Fixed User Class instantiation
