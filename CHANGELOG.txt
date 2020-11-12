@@ -1,38 +1,8 @@
 Change Log
 ==========
-
-0.0.1 (11/10/2020)
+0.1.2 (11/11/2020)
 ------------------
-- First Release
-- Completed Character Object
-
-0.0.2 (11/10/2020
------------------
-- Fixed Typos
-
-0.0.3 (11/10/2020)
-------------------
-- Minor documentation edit
-
-0.0.4 (11/10/2020)
-------------------
-- fixed get_job_name()
-
-0.0.5 (11/10/2020)
-------------------
-- Added a port parameter to SwordieDB Constructor
-
-0.0.6 (11/10/2020)
-------------------
-- Fixed getting getting a job's name from the job id
-- Minor Documentation tweaks
-
-0.1.0 (11/11/2020)
-------------------
-- Character Handling is now 100% working and tested
-- Removed unnecessary imports
-- Fixed missing Job IDs
-- Minor Documentation Updates
+- Fixed User Class instantiation
 
 0.1.1 (11/11/2020)
 ------------------
@@ -41,6 +11,35 @@ Change Log
 - Fixed some functions not using custom port in SwordieDB
 - Documentation addition in github wiki
 
-0.1.2 (11/11/2020)
+0.1.0 (11/11/2020)
 ------------------
-- Fixed User Class instantiation
+- Character Handling is now 100% working and tested
+- Removed unnecessary imports
+- Fixed missing Job IDs
+- Minor Documentation Updates
+
+0.0.6 (11/10/2020)
+------------------
+- Fixed getting getting a job's name from the job id
+- Minor Documentation tweaks
+
+0.0.5 (11/10/2020)
+------------------
+- Added a port parameter to SwordieDB Constructor
+
+0.0.4 (11/10/2020)
+------------------
+- fixed get_job_name()
+
+0.0.3 (11/10/2020)
+------------------
+- Minor documentation edit
+
+0.0.2 (11/10/2020
+-----------------
+- Fixed Typos
+
+0.0.1 (11/10/2020)
+------------------
+- First Release
+- Completed Character Object
