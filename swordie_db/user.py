@@ -83,7 +83,7 @@ class User:
     @donation_points.setter
     def donation_points(self, amount):
         self.set_stat_by_column("donationpoints", amount)
-        self.donation_points = amount
+        self._donation_points = amount
 
     def add_donation_points(self, amount):
         new_dp = int(amount) + self.donation_points
