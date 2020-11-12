@@ -38,6 +38,11 @@ class Character:
         max_mp: Integer, representing character Max MP stat pool
         ap: Integer, representing character free Ability Points (AP) pool
         sp: Integer, representing character free SP points pool
+        equipped_inv_id: Integer, representing the equipped inventory id
+        consume_inv_id: Integer, representing "consume" aka Use inventory id
+        etc_inv_id: Integer, representing etc inventory id
+        install_inv_id: Integer, representing install/setup inventory id
+        cash_inv_id: Integer, representing cash/nx inventory id
     """
 
     def __init__(self, char_stats, database_config):
@@ -82,6 +87,14 @@ class Character:
         self._portal = 0
         self._sub_job = 0
         self.init_stats()
+
+        # These attributes are separate from characterstats table in database
+        self._equipped_inv_id = 0
+        self._consume_inv_id = 0
+        self._etc_inv_id = 0
+        self._install_inv_id = 0
+        self._cash_inv_id = 0
+        self.init_inv_id()
 
         self._user = self.init_user()
 
@@ -153,12 +166,36 @@ class Character:
             cursor.execute(f"SELECT * FROM users WHERE id = '{user_id}'")
 
             user_stats = cursor.fetchall()[0]
+            database.disconnect()
             # The row will always be 0 because there should be no characters with the same name
             user = User(user_stats, self.database_config)
             return user
 
         except Exception as e:
             print("[ERROR] Error trying to retrieve User Data.", e)
+
+    def init_inv_id(self):
+        try:
+            host = self._database_config["host"]
+            user = self._database_config["user"]
+            password = self._database_config["password"]
+            schema = self._database_config["schema"]
+            port = self._database_config["port"]
+
+            database = con.connect(host=host, user=user, password=password, database=schema, port=port)
+            cursor = database.cursor(dictionary=True)
+            cursor.execute(f"SELECT equippedinventory, consumeinventory, etcinventory, installinventory, cashinventory FROM characters WHERE id = '{self.character_id}'")
+            inventory_ids = cursor.fetchall()[0]
+            database.disconnect()
+
+            self._equipped_inv_id = inventory_ids["equippedinventory"]
+            self._consume_inv_id = inventory_ids["consumeinventory"]
+            self._etc_inv_id = inventory_ids["etcinventory"]
+            self._install_inv_id = inventory_ids["installinventory"]
+            self._cash_inv_id = inventory_ids["cashinventory"]
+
+        except Exception as e:
+            print("[ERROR] Error trying to obtain assign inventory ids.", e)
 
     @property
     def database_config(self):
@@ -167,6 +204,10 @@ class Character:
     @property
     def stats(self):
         return self._stats
+
+    @property
+    def character_id(self):
+        return self._character_id
 
     @property
     def level(self):
@@ -468,6 +509,26 @@ class Character:
     @property
     def user(self):
         return self._user
+
+    @property
+    def equipped_inv_id(self):
+        return self._equipped_inv_id
+
+    @property
+    def consume_inv_id(self):
+        return self._consume_inv_id
+
+    @property
+    def etc_inv_id(self):
+        return self._etc_inv_id
+
+    @property
+    def install_inv_id(self):
+        return self._install_inv_id
+
+    @property
+    def cash_inv_id(self):
+        return self._cash_inv_id
 
     def get_user_id(self):
         """Queries the database to obtain the User ID associated with this character instance
