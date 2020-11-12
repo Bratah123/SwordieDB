@@ -24,5 +24,8 @@ for stat in primary_stats:
 # User Class
 
 user = char.user
-user.ban_reason = "For hacking"
 user.is_admin()
+
+# Inventory
+
+print("Consume Inventory:", char.inventory.consume_inv)

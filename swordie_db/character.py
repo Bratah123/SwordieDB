@@ -7,6 +7,7 @@ Refer to database.py or the project wiki on GitHub for usage examples.
 import mysql.connector as con
 
 from swordie_db import JOBS
+from swordie_db.inventory import Inventory
 from swordie_db.user import User
 
 
@@ -96,8 +97,8 @@ class Character:
         self._etc_inv_id = 0
         self._install_inv_id = 0
         self._cash_inv_id = 0
+        self._inventory = None
         # Create Inventory object instance via class constructor, using details from Character object instance
-        # (Stipulated algorithm for unfinished sequence)
         self.init_inv_id()
 
         # Create User object instance via class constructor, using details from Character object instance
@@ -177,7 +178,7 @@ class Character:
         """
         inventory_ids = self.get_db(
             self._database_config,
-            f"SELECT equippedinventory, consumeinventory, etcinventory, installinventory, cashinventory "
+            f"SELECT equippedinventory, equipinventory, consumeinventory, etcinventory, installinventory, cashinventory "
             f"FROM characters WHERE id = '{self.character_id}'"
         )  # The row will always be 0 because there should be no characters with the same ID
 
@@ -187,6 +188,7 @@ class Character:
         self._etc_inv_id = inventory_ids["etcinventory"]
         self._install_inv_id = inventory_ids["installinventory"]
         self._cash_inv_id = inventory_ids["cashinventory"]
+        self._inventory = Inventory(self.get_inventory_ids(), self.database_config)
 
     # Static method for fetching DB
     @staticmethod
@@ -458,6 +460,23 @@ class Character:
         }
         return primary_stats
 
+    def get_inventory_ids(self):
+        """Returns equip_inv_id, equipped_inv_id, consume_inv_id, etc_inv_id, install_inv_id, cash_inv_id in a dict
+
+        Returns:
+            dictionary of all inventory ids from corresponding character
+        """
+        inventory_ids = {
+            "equip_inv_id": self.equip_inv_id,
+            "equipped_inv_id": self.equipped_inv_id,
+            "consume_inv_id": self.consume_inv_id,
+            "etc_inv_id": self.etc_inv_id,
+            "install_inv_id": self.install_inv_id,
+            "cash_inv_id": self.cash_inv_id
+        }
+
+        return inventory_ids
+
     @property
     def max_hp(self):
         return self._max_hp
@@ -557,6 +576,10 @@ class Character:
     @property
     def equip_inv_id(self):
         return self._equip_inv_id
+
+    @property
+    def inventory(self):
+        return self._inventory
 
     def get_user_id(self):
         """Queries the database to obtain the User ID associated with this character instance
