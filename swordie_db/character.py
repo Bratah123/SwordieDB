@@ -88,9 +88,9 @@ class Character:
     def init_stats(self):
         """Given a dictionary of stats from Swordie's DB we add them to Character object's attributes
 
-        Runs at the end of Character::__init__(char_stats, database_config).
-        It assigns the character stats in char_stats to their respective protected attributes belonging to
-        the Character object.
+        Runs near the end of Character::__init__(char_stats, database_config).
+        It assigns the character attributes in char_stats to their respective protected attributes belonging to
+        the Character object instance.
         """
         self._vague_id = self._stats["id"]
         self._character_id = self._stats["characterid"]
@@ -125,9 +125,16 @@ class Character:
         self._sub_job = self._stats["subjob"]
 
     def init_user(self):
-        """
-        A method that will automatically create a user object connected to the character's user attribute
-        :return: User
+        """Fetch a dictionary of user attributes from Swordie's DB and use it to instantiate a new User object
+
+        Runs at the end of Character::__init__(char_stats, database_config).
+        Checks the User ID associated with the character instance, and uses the User class constructor to create
+        a new User object instance, with the relevant user attributes from the database.
+
+        Returns:
+            User
+        Raises:
+            Generic error on failure
         """
 
         user_id = self.get_user_id()
@@ -463,9 +470,15 @@ class Character:
         return self._user
 
     def get_user_id(self):
-        """
+        """Queries the database to obtain the User ID associated with this character instance
+
         Created this method to avoid circular imports by using SwordieDB's get_user_id
-        :return:
+
+        Returns:
+            Int, representing the User ID
+            Returns None if User ID is not found
+        Raises:
+            Generic error on failure
         """
         host = self._database_config["host"]
         user = self._database_config["user"]
@@ -498,14 +511,14 @@ class Character:
         Grabs the database attributes provided through the class constructor.
         Uses these attributes to attempt a database connection.
         Attempts to update the field represented by the provided column in characterstats, with the provided value.
-        Not recommended to use this alone, as it won't update the character object which this was used from
+        Not recommended to use this alone, as it won't update the character object which this was used from.
 
         Args:
             value: int or string, representing the value to be set in the database
             column: string, representing the column in the database that is to be updated
 
         Returns:
-            A boolean representing whether the operation was successful.
+            A boolean representing whether the operation was successful
 
         Raises:
             SQL Error 2003: Can't cannect to DB
@@ -543,9 +556,7 @@ class Character:
             string, representing the value in the database associated with the provided column
 
         Raises:
-            SQL Error 2003: Can't cannect to DB
-            WinError 10060: No response from DB
-            List index out of range: Wrong column name
+            Generic error on failure
         """
         try:
             return self.stats[column]
