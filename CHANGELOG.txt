@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+0.2.1 (11/12/2020)
+------------------
+- Refactor to how database calls are used in character class
+- Added inventory handling (able to see character's inventory)
+
 0.2.0 (11/12/2020)
 ------------------
 - Raised minor version to 2 as all of User and Character functionality has been tested to work!
