@@ -38,11 +38,11 @@ class Character:
         max_mp: Integer, representing character Max MP stat pool
         ap: Integer, representing character free Ability Points (AP) pool
         sp: Integer, representing character free SP points pool
-        equipped_inv_id: Integer, representing the equipped inventory id
-        consume_inv_id: Integer, representing "consume" aka Use inventory id
-        etc_inv_id: Integer, representing etc inventory id
-        install_inv_id: Integer, representing install/setup inventory id
-        cash_inv_id: Integer, representing cash/nx inventory id
+        equipped_inv_id: Integer, representing the "equipped" (i.e. Hotkey "E" in-game) inventory id
+        consume_inv_id: Integer, representing "consume" (aka USE) inventory id
+        etc_inv_id: Integer, representing "etc" (aka ETC) inventory id
+        install_inv_id: Integer, representing "install" (aka SETUP) inventory id
+        cash_inv_id: Integer, representing "cash" (aka CASH) inventory id
     """
 
     def __init__(self, char_stats, database_config):
@@ -94,8 +94,11 @@ class Character:
         self._etc_inv_id = 0
         self._install_inv_id = 0
         self._cash_inv_id = 0
+        # Create Inventory object instance via class constructor, using details from Character object instance
+        # (Stipulated algorithm for unfinished sequence)
         self.init_inv_id()
 
+        # Create User object instance via class constructor, using details from Character object instance
         self._user = self.init_user()
 
     def init_stats(self):
@@ -147,55 +150,70 @@ class Character:
         Returns:
             User
         Raises:
-            Generic error on failure
+            Generic error on failure - handled by the Character::get_db() method
         """
 
         user_id = self.get_user_id()
-
-        try:
-            host = self._database_config["host"]
-            user = self._database_config["user"]
-            password = self._database_config["password"]
-            schema = self._database_config["schema"]
-            port = self._database_config["port"]
-
-            database = con.connect(host=host, user=user, password=password, database=schema, port=port)
-
-            cursor = database.cursor(dictionary=True)
-
-            cursor.execute(f"SELECT * FROM users WHERE id = '{user_id}'")
-
-            user_stats = cursor.fetchall()[0]
-            database.disconnect()
-            # The row will always be 0 because there should be no characters with the same name
-            user = User(user_stats, self.database_config)
-            return user
-
-        except Exception as e:
-            print("[ERROR] Error trying to retrieve User Data.", e)
+        
+        user_stats = get_db(
+            self._database_config, 
+            f"SELECT * FROM users WHERE id = '{user_id}'"
+        )  # The row will always be 0 because there should be no characters with the same name
+        user = User(user_stats, self.database_config)
+        return user
 
     def init_inv_id(self):
-        try:
-            host = self._database_config["host"]
-            user = self._database_config["user"]
-            password = self._database_config["password"]
-            schema = self._database_config["schema"]
-            port = self._database_config["port"]
+        """Fetch a dictionary of user attributes from Swordie's DB and use it to instantiate a new (custom) Inventory object
 
-            database = con.connect(host=host, user=user, password=password, database=schema, port=port)
+        (Stipulated algorithm for unfinished sequence)
+        Runs near the end of Character::__init__(char_stats, database_config).
+        Uses the Character ID associated with the character instance, and the Inventory class constructor to create
+        a new Inventory object instance, with the relevant character attributes from the database.
+
+        Raises:
+            Generic error on failure - handled by the Character::get_db() method
+        """
+        inventory_ids = get_db(
+            self._database_config, 
+            f"SELECT equippedinventory, consumeinventory, etcinventory, installinventory, cashinventory FROM characters WHERE id = '{self.character_id}'"
+        )  # The row will always be 0 because there should be no characters with the same ID
+        
+        self._equipped_inv_id = inventory_ids["equippedinventory"]
+        self._consume_inv_id = inventory_ids["consumeinventory"]
+        self._etc_inv_id = inventory_ids["etcinventory"]
+        self._install_inv_id = inventory_ids["installinventory"]
+        self._cash_inv_id = inventory_ids["cashinventory"]
+
+    # Static method for fetching DB
+    @staticmethod
+    def get_db(config, query):
+        """Generic static method for fetching data from DB using the provided DB config and query
+        
+        This method assumes that only one character is found - it always defaults to the first result
+        
+        Args:
+            config, dictionary, representing database config attributes
+            query, String, representing SQL query
+        Returns:
+            String representing the result of the provided SQL query, using the provided DB connection attributes
+        """
+        try:
+            database = con.connect(
+                host=config["host"], 
+                user=config["user"], 
+                password=config["password"], 
+                database=config["schema"], 
+                port=config["port"]
+            )
             cursor = database.cursor(dictionary=True)
-            cursor.execute(f"SELECT equippedinventory, consumeinventory, etcinventory, installinventory, cashinventory FROM characters WHERE id = '{self.character_id}'")
-            inventory_ids = cursor.fetchall()[0]
+            cursor.execute(query)
+            data = cursor.fetchall()[0]
             database.disconnect()
 
-            self._equipped_inv_id = inventory_ids["equippedinventory"]
-            self._consume_inv_id = inventory_ids["consumeinventory"]
-            self._etc_inv_id = inventory_ids["etcinventory"]
-            self._install_inv_id = inventory_ids["installinventory"]
-            self._cash_inv_id = inventory_ids["cashinventory"]
-
+            return data
+            
         except Exception as e:
-            print("[ERROR] Error trying to obtain assign inventory ids.", e)
+            print("CRITICAL: Error encountered whilst attempting to connect to the database! \n", e)
 
     @property
     def database_config(self):
