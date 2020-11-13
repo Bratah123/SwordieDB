@@ -1,6 +1,6 @@
 from swordie_db.database import SwordieDB
 
-swordie_data = SwordieDB()  # If no parameters are given, it will attempt to connect to localhost
+swordie_data = SwordieDB(schema="spirit")  # If no parameters are given, it will attempt to connect to localhost
 
 char = swordie_data.get_char_by_name("brandon")
 
@@ -11,6 +11,7 @@ print("Character Level:", char.level)
 print("Job:", char.get_job_name())
 print("Mesos:", char.money)
 print("Fame:", char.fame)
+print("Character image", char.get_char_img())
 
 primary_stats = char.get_primary_stats()
 

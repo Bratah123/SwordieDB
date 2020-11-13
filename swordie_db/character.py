@@ -581,6 +581,18 @@ class Character:
     def inventory(self):
         return self._inventory
 
+    def get_char_img(self):
+        equipped_items = [self.face, self.hair]
+        equipped_inv = self.inventory.equipped_inv
+
+        for item in equipped_inv:
+            item_id = equipped_inv[item]["itemid"]
+            equipped_items.append(item_id)
+
+        url = f"https://maplestory.io/api/GMS/216/Character/200{self.skin}/{str(equipped_items)[1:-1]}/stand1/1".replace(" ", "")
+
+        return url
+
     def get_user_id(self):
         """Queries the database to obtain the User ID associated with this character instance
 
