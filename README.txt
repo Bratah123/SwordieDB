@@ -6,3 +6,8 @@ Visit the github for more information on how to use this package!
 https://github.com/Bratah123/SwordieDB
 
 Official Documentation for the API : https://kookiiestudios.github.io/ProjectShieldieDB/
+
+Authors:
+--------
+- Brandon Nguyen
+- Amos Chua

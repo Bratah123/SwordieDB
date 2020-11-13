@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+1.0.0 (11/13/2020)
+------------------
+- Official release of SwordieDB API!
+- All unit testing has been done to determine full 100% functioning methods and classes (Kookiie)
+
 0.2.3 (11/12/2020)
 ------------------
 - Added more functionality to Inventory Class
