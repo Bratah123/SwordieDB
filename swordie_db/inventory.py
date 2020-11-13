@@ -1,18 +1,47 @@
+"""This module holds the Inventory class for the SwordieDB package.
+
+Copyright 2020 TEAM SPIRIT. All rights reserved.
+Use of this source code is governed by a MIT-style license that can be found in the LICENSE file.
+Refer to database.py or the project wiki on GitHub for usage examples.
+"""
 import mysql.connector as con
 
 
 class Inventory:
+    """Inventory object; quasi-models SwordieMS inventories.
+
+    The instance method SwordieDB::get_char_by_name(name) creates a Character object; as part of
+    swordie_db Charatcer object instantiation, an Inventory object instance containing inventory attributes of
+    the character with IGN "name" in the connected Swordie-based database is created.
+    This class contains the appropriate getter methods for said attributes.
+    As a consequence of the inherent complexity of MapleStory's item system, for safety reasons,
+    this module offers NO inventory-write operations (aka setters).
+
+    Attributes:
+        inventory_ids: dictionary, representing inventory IDs
+        equip_inv: dictionary of dictionaries, representing in-game items contained by the EQUIP tab
+        consume_inv: dictionary of dictionaries, representing in-game items contained by the USE tab
+        etc_inv: dictionary of dictionaries, representing in-game items contained by the ETC tab
+        install_inv: dictionary of dictionaries, representing in-game items contained by the SETUP tab
+        cash_inv: dictionary of dictionaries, representing in-game items contained by the CASH tab
+        equipped_inv: dictionary of dictionaries, representing in-game items currently equipped by the character
+    """
 
     def __init__(self, inv_ids, db_config):
-        """
+        """Inventory object; quasi-models SwordieMS inventories.
 
-        :param inv_ids: dictionary
-        :param db_config: dictionary
+        Due to the inherent complexity of SwordieMS's iventory system, this Inventory object will
+        attempt to contain attributes of all 6 of SwordieMS's inventory types, using a custom object.
+        (Refer to Character::init_inventory_ids() for a list of inventory_types)
+        Every inventory attribute is a dictionary of dictionaries, where the Key is the bag index
+        (i.e. inventory type), and the Value is a dictionary modeling contents of the `items` table
+        in a Swordie-based database.
+        As a consequence of the inherent complexity of MapleStory's item system, for safety reasons,
+        this module offers NO inventory-write operations (only inventory-read operations).
 
-        Every inventory attribute is a dictionary where the key is the bag index of the item
-        The Value is a dictionary pertaining attributes from items table in Swordie DB
-        No write operations will be made by this class due to the complexity of Maplestory's Item and Equip's system
-        To keep this a safer library, Inventory will not have ANY write operations but only reads instead.
+        Args:
+            inv_ids: dictionary, representing inventory IDs
+            db_config: dictionary, containing database connection attributes
         """
         self._inventory_ids = inv_ids
         self._database_config = db_config
@@ -57,41 +86,82 @@ class Inventory:
     def equipped_inv(self):
         return self._equipped_inv
 
-    def has_item_in_equip(self, item_id):
-        for bag_index in self.equip_inv:
-            if int(self.equip_inv[bag_index]['itemid']) == item_id:
+    @staticmethod
+    def has_item_in_inv_type(inv_type, item_id):
+        """Checks whether the particular tab of the inventory has an item
+
+        Generic static method used by the other Inventory::has_item_in_XXX() methods, and the
+        Character::is_equipping() method.
+        Iterates through the dictionary of items associated with the specified tab, and check if
+        the provided item ID can be found as a value.
+
+        Returns:
+            Boolean, representing whether the specified item was found
+        """
+        for bag_index in inv_type:
+            if int(inv_type[bag_index]['itemid']) == item_id:
                 return True
         return False
+
+    def has_item_in_equip(self, item_id):
+        """Checks whether the EQUIP tab of the inventory has an item
+
+        Uses Inventory::has_item_in_inv_type()
+
+        Returns:
+            Boolean, representing whether the specified item was found
+        """
+        return self.has_item_in_inv_type(self.equip_inv, item_id)
 
     def has_item_in_consume(self, item_id):
-        for bag_index in self.consume_inv:
-            if int(self.consume_inv[bag_index]['itemid']) == item_id:
-                return True
-        return False
+        """Checks whether the USE tab of the inventory has an item
+
+        Uses Inventory::has_item_in_inv_type()
+
+        Returns:
+            Boolean, representing whether the specified item was found
+        """
+        return self.has_item_in_inv_type(self.consume_inv, item_id)
 
     def has_item_in_etc(self, item_id):
-        for bag_index in self.etc_inv:
-            if int(self.etc_inv[bag_index]['itemid']) == item_id:
-                return True
-        return False
+        """Checks whether the ETC tab of the inventory has an item
+
+        Uses Inventory::has_item_in_inv_type()
+
+        Returns:
+            Boolean, representing whether the specified item was found
+        """
+        return self.has_item_in_inv_type(self.etc_inv, item_id)
 
     def has_item_in_install(self, item_id):
-        for bag_index in self.install_inv:
-            if int(self.install_inv[bag_index]['itemid']) == item_id:
-                return True
-        return False
+        """Checks whether the SETUP tab of the inventory has an item
+
+        Uses Inventory::has_item_in_inv_type()
+
+        Returns:
+            Boolean, representing whether the specified item was found
+        """
+        return self.has_item_in_inv_type(self.install_inv, item_id)
 
     def has_item_in_cash(self, item_id):
-        for bag_index in self.cash_inv:
-            if int(self.cash_inv[bag_index]['itemid']) == item_id:
-                return True
-        return False
+        """Checks whether the CASH tab of the inventory has an item
+
+        Uses Inventory::has_item_in_inv_type()
+
+        Returns:
+            Boolean, representing whether the specified item was found
+        """
+        return self.has_item_in_inv_type(self.cash_inv, item_id)
 
     def is_equipping(self, item_id):
-        for bag_index in self.equipped_inv:
-            if int(self.equipped_inv[bag_index]['itemid']) == item_id:
-                return True
-        return False
+        """Checks whether the EQUIP window (i.e. Hotkey "E") has an item (i.e. item is equipped)
+
+        Uses Inventory::has_item_in_inv_type()
+
+        Returns:
+            Boolean, representing whether the specified item was found
+        """
+        return self.has_item_in_inv_type(self.equipped_inv, item_id)
 
     def init_equip_items(self):
         return self.load_inv("equip_inv_id")
@@ -112,11 +182,19 @@ class Inventory:
         return self.load_inv("install_inv_id")
 
     def load_inv(self, inventory_type):
-        """
-        Given an inventory_type, load every item in it.
+        """Given an inventory_type, fetch every item associated with it.
+
+        Generic instance method used by Character::init_XXX_inv() methods.
         Refer to Character::init_inventory_ids() for a list of inventory_types.
-        :param inventory_type: string
-        :return: dictionary
+
+        Args:
+            inventory_type: string, representing the inventory type
+
+        Returns:
+            dictionary, representing all the in-game items that in the specified inventory type
+
+        Raises:
+            Generic error
         """
         try:
             database = con.connect(
@@ -148,4 +226,4 @@ class Inventory:
                 inv[bag_index] = item_stats
             return inv
         except Exception as e:
-            print("Critical: Error occured when initializing equip items", e)
+            print("CRITICAL: Error occurred when initializing inventory items: \n", e)
