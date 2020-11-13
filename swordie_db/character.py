@@ -151,7 +151,7 @@ class Character:
         a new User object instance, with the relevant user attributes from the database.
 
         Returns:
-            User
+            User object with attributes identical to its corresponding entry in the database
         Raises:
             Generic error on failure - handled by the Character::get_db() method
         """
@@ -593,27 +593,40 @@ class Character:
 
         return url
 
-    def get_user_id(self):
-        """Queries the database to obtain the User ID associated with this character instance
+    @staticmethod
+    def get_user_id_by_name(config, char_name):
+        """Given a character name, retrieve its corresponding user id from database
 
-        Created this method to avoid circular imports by using SwordieDB's get_user_id
+        Used by Character::get_user_id() & SwordieDB::get_user_id_by_name()
+        There is no direct way of obtaining this information.
+        Hence, this method will fetch the character ID from the database, using the character name.
+        Then, fetch the account ID from the database, using the character ID.
+        Then, fetch the user ID from the database, using the account ID.
+
+        Args:
+            config: dictionary, representing database config attributes
+            char_name: string, representing the character name in the database
 
         Returns:
-            Int, representing the User ID
-            Returns None if User ID is not found
+            String, representing the user ID in the database
+            Defaults to None if the operation fails.
+
         Raises:
-            Generic error on failure
+            SQL Error 2003: Can't cannect to DB
+            WinError 10060: No response from DB
+            List index out of range: Wrong character name
         """
-        host = self._database_config["host"]
-        user = self._database_config["user"]
-        password = self._database_config["password"]
-        schema = self._database_config["schema"]
-        port = self._database_config["port"]
         try:
-            database = con.connect(host=host, user=user, password=password, database=schema, port=port)
+            database = con.connect(
+                host=config["host"],
+                user=config["user"],
+                password=config["password"],
+                database=config["schema"],
+                port=config["port"]
+            )
             cursor = database.cursor(dictionary=True)
 
-            cursor.execute(f"SELECT characterid FROM characterstats WHERE name = '{self.name}'")
+            cursor.execute(f"SELECT characterid FROM characterstats WHERE name = '{char_name}'")
             char_id = cursor.fetchall()[0]["characterid"]
 
             cursor.execute(f"SELECT accid FROM characters WHERE id = '{char_id}'")
@@ -628,6 +641,22 @@ class Character:
         except Exception as e:
             print("[ERROR] Error trying to get user id from database.", e)
             return None  # Return None if there was an error
+
+    def get_user_id(self):
+        """Queries the database to obtain the User ID associated with this character instance
+
+        Uses static method Character::get_user_id_by_name() for core logic
+
+        Returns:
+            Int, representing the User ID
+            Returns None if User ID is not found
+        Raises:
+            Errors are handled and thrown by Character::get_user_id_by_name()
+            SQL Error 2003: Can't cannect to DB
+            WinError 10060: No response from DB
+            List index out of range: Wrong character name
+        """
+        return self.get_user_id_by_name(self._database_config, self._name)
 
     def set_stat_by_column(self, column, value):
         """Update a character's stats from column name in database
