@@ -11,6 +11,8 @@ class Inventory:
 
         Every inventory attribute is a dictionary where the key is the bag index of the item
         The Value is a dictionary pertaining attributes from items table in Swordie DB
+        No write operations will be made by this class due to the complexity of Maplestory's Item and Equip's system
+        To keep this a safer library, Inventory will not have ANY write operations but only reads instead.
         """
         self._inventory_ids = inv_ids
         self._database_config = db_config
@@ -54,6 +56,42 @@ class Inventory:
     @property
     def equipped_inv(self):
         return self._equipped_inv
+
+    def has_item_in_equip(self, item_id):
+        for bag_index in self.equip_inv:
+            if int(self.equip_inv[bag_index]['itemid']) == item_id:
+                return True
+        return False
+
+    def has_item_in_consume(self, item_id):
+        for bag_index in self.consume_inv:
+            if int(self.consume_inv[bag_index]['itemid']) == item_id:
+                return True
+        return False
+
+    def has_item_in_etc(self, item_id):
+        for bag_index in self.etc_inv:
+            if int(self.etc_inv[bag_index]['itemid']) == item_id:
+                return True
+        return False
+
+    def has_item_in_install(self, item_id):
+        for bag_index in self.install_inv:
+            if int(self.install_inv[bag_index]['itemid']) == item_id:
+                return True
+        return False
+
+    def has_item_in_cash(self, item_id):
+        for bag_index in self.cash_inv:
+            if int(self.cash_inv[bag_index]['itemid']) == item_id:
+                return True
+        return False
+    
+    def is_equipping(self, item_id):
+        for bag_index in self.equipped_inv:
+            if int(self.equipped_inv[bag_index]['itemid']) == item_id:
+                return True
+        return False
 
     def init_equip_items(self):
         return self.load_inv("equip_inv_id")
