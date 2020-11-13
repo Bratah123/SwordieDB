@@ -99,7 +99,7 @@ class Inventory:
             Boolean, representing whether the specified item was found
         """
         for bag_index in inv_type:
-            if int(inv_type[bag_index]['itemid']) == item_id:
+            if inv_type[bag_index]['itemid'] == item_id:
                 return True
         return False
 
