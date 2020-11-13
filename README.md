@@ -5,8 +5,8 @@ SwordieDB is a pip-compatible Python package designed for use in development of 
 
 The SwordieDB API allows access to character stats in the form of objects, for easy manipulation.  
 
-#### **Current Status:** In Active Development  
-**Overall Developmental Progress:** ![](https://progress-bar.dev/100) (arbitrary number - to be tracked by Brandon)  
+#### **Current Status:** Fully Released
+**Overall Developmental Progress:** ![](https://progress-bar.dev/100) 
   
 **Character Handling:** ![](https://progress-bar.dev/100)    
 **User Handling:** ![](https://progress-bar.dev/100)    
