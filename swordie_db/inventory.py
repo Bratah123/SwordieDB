@@ -86,7 +86,7 @@ class Inventory:
             if int(self.cash_inv[bag_index]['itemid']) == item_id:
                 return True
         return False
-    
+
     def is_equipping(self, item_id):
         for bag_index in self.equipped_inv:
             if int(self.equipped_inv[bag_index]['itemid']) == item_id:

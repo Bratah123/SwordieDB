@@ -10,7 +10,7 @@ The SwordieDB API allows access to character stats in the form of objects, for e
   
 **Character Handling:** ![](https://progress-bar.dev/99)    
 **User Handling:** ![](https://progress-bar.dev/100)    
-**Inventory Handling:** ![](https://progress-bar.dev/50)    
+**Inventory Handling:** ![](https://progress-bar.dev/90)    
 ## Installation
 Note: You are recommended to install to the project virtual environment.
 - In the terminal type the follow command: `pip install swordiedb`  

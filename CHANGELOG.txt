@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+0.2.3 (11/12/2020)
+------------------
+- Added more functionality to Inventory Class
+- This should complete all important modules of this library (awaiting testing)
+
 0.2.2 (11/12/2020)
 ------------------
 - Added setup inventory support
