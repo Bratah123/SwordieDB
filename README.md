@@ -29,4 +29,4 @@ Please refer to the [Technical Details page](https://github.com/Bratah123/Swordi
 The API Docs have been split out into a sister project [here](https://kookiiestudios.github.io/ProjectShieldieDB/).
 
 ## Suggestions
-Suggestions for new features/functionality can be written as an issue from the "Issues" tab on github.
+Suggestions for new features/functionality can be written as an issue from the ["Issues"](https://github.com/Bratah123/SwordieDB/issues) tab on github.
