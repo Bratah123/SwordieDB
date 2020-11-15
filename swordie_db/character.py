@@ -270,6 +270,11 @@ class Character:
         """
         return JOBS[str(self.job)]
 
+    def get_gender_name(self):
+        if self._gender == 0:
+            return "Male"
+        return "Female"
+
     @property
     def name(self):
         return self._name
