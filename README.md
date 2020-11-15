@@ -30,3 +30,6 @@ The API Docs have been split out into a sister project [here](https://kookiiestu
 
 ## Suggestions
 Suggestions for new features/functionality can be written as an issue from the ["Issues"](https://github.com/Bratah123/SwordieDB/issues) tab on github.
+
+## Credits
+- Credits to the original swordie devs!
