@@ -20,7 +20,7 @@ Note: You are recommended to install to the project virtual environment.
         - `pip install -U wheel`
 - Now to verify that you have access to the swordie_db module:
     - Try this import statement in the Python terminal: `from swordie_db.database import SwordieDB`
-- Then you are done! Refer to examples on how to use them. :octocat:
+- Then you are done! Refer to [examples](https://github.com/Bratah123/SwordieDB/wiki/Sample-Code-Fragments) on how to use them. :octocat:
 ## Examples
 See the [Code Examples page](https://github.com/Bratah123/SwordieDB/wiki/Sample-Code-Fragments) for sample code fragments.
 ## Technical Details
