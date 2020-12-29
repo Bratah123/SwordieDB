@@ -1,6 +1,8 @@
 # SwordieDB
 ### [SwordieDB PyPi Page](https://pypi.org/project/swordiedb/)
 
+[![Downloads](https://static.pepy.tech/personalized-badge/swordiedb?period=total&units=international_system&left_color=black&right_color=blue&left_text=Total%20Downloads)](https://pepy.tech/project/swordiedb) [![Downloads](https://static.pepy.tech/personalized-badge/swordiedb?period=month&units=international_system&left_color=black&right_color=blue&left_text=Monthly%20Downloads)](https://pepy.tech/project/swordiedb) [![Downloads](https://static.pepy.tech/personalized-badge/lazuli?period=week&units=international_system&left_color=black&right_color=blue&left_text=Weekly%20Downloads)](https://pepy.tech/project/swordiedb)  
+
 SwordieDB is a pip-compatible Python package designed for use in development of SwordieMS-based MapleStory private server tools (e.g. Discord bots).  
 
 The SwordieDB API allows access to character stats in the form of objects, for easy manipulation.  
