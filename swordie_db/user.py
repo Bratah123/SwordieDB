@@ -43,6 +43,9 @@ class User:
         self._maple_points = 0
         self._nx_prepaid = 0
         self._account_type = 0
+        self._username = ""
+        self._password = ""
+        self._pic = ""
         self.init_user_stats()
 
     def init_user_stats(self):
@@ -59,6 +62,9 @@ class User:
         self._maple_points = self._user_stats["maplePoints"]
         self._nx_prepaid = self._user_stats["nxPrepaid"]
         self._account_type = self._user_stats["accounttype"]
+        self._username = self._user_stats["name"]
+        self._password = self._user_stats["password"]
+        self._pic = self._user_stats["pic"]
 
     @property
     def user_stats(self):
@@ -67,6 +73,28 @@ class User:
     @property
     def database_config(self):
         return self._database_config
+
+    @property
+    def username(self):
+        return self._username
+
+    @username.setter
+    def username(self, x):
+        self._username = x
+        self.set_stat_by_column("name", x)
+
+    @property
+    def password(self):
+        return self._password
+
+    @property
+    def pic(self):
+        return self._pic
+
+    @pic.setter
+    def pic(self, x):
+        self._pic = x
+        self.set_stat_by_column("pic", x)
 
     @property
     def user_id(self):
